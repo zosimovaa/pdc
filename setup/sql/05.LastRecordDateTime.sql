@@ -1,0 +1,1 @@
+select FROM_UNIXTIME(max(ts)) from rt.orderbook

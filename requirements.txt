@@ -1,0 +1,16 @@
+backports.zoneinfo==0.2.1
+basic-application @ git+https://bitbucket.org/zosimovaa/basic_application.git@23292b1a813809396701a53d59cf86f040998123
+certifi==2022.5.18.1
+charset-normalizer==2.0.12
+clickhouse-driver==0.2.3
+idna==3.3
+logging-telegram-handler @ git+https://bitbucket.org/zosimovaa/logging_telegram_handler.git@6bef08b05883f0eb15ca14b5bf98796f8960aaa5
+numpy==1.21.6
+pytz==2022.1
+pytz-deprecation-shim==0.1.0.post0
+PyYAML==6.0
+requests==2.27.1
+telegram-send @ git+https://bitbucket.org/zosimovaa/telegram_send.git@30e48af18922b648797da52148eaf71d35eec68e
+tzdata==2022.1
+tzlocal==4.2
+urllib3==1.26.9

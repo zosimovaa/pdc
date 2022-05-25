@@ -1,0 +1,17 @@
+[Unit]
+Description=Poloniex Data Connector
+After=clickhouse-server.service
+
+[Service]
+Environment="ENV=PROD"
+Environment="DB_USER=<name here>"
+Environment="<password here>"
+ExecStart=/home/alex/rt/pdc/venv/bin/python /home/alex/rt/pdc/app/app.py
+WorkingDirectory=/home/alex/rt/pdc/app
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=pdc
+
+[Install]
+WantedBy=default.target

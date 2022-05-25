@@ -1,0 +1,5 @@
+.idea
+db_connector/__pycache__
+logs
+poloniex/__pycache__
+bitbucket-pipelines_.yml
