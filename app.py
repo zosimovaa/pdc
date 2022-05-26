@@ -14,16 +14,19 @@ logger = logging.getLogger(__name__)
 
 
 class PdcLiteApp(BasicApplication):
+    NAME = "Poloniex Data Collector"
+    VERSION = 1.1
     MAX_TIMEOUT = 180
 
     def __init__(self, config, secrets_list):
         BasicApplication.__init__(self, config, secrets_list)
+        time.sleep(2)
 
     def run(self):
         while True:
             try:
                 pdc = HttpDataCollector()
-                logger.critical("Started")
+                logger.critical("{0} v.{1} started".format(self.NAME, self.VERSION))
 
                 db_config = self.config_manager.get_config().get("db")
                 db_config["user"] = os.getenv("DB_USER")

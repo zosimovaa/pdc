@@ -59,6 +59,7 @@ log:
       level: DEBUG
 
     basic_application:
+      handlers: [console, file, telegram]
       level: DEBUG
 
     config_manager:
@@ -68,7 +69,7 @@ log:
       level: WARNING
 
     db_connector:
-      level: DEBUG
+      level: INFO
 
     data_providers:
       level: WARNING
