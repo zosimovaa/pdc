@@ -3,6 +3,7 @@ runtime:
   updateTimeout: 45
   errorTimeout: 10
   query: "insert into rt_dev.orderbook values"
+  query_ob: "insert into rt_dev.ob_raw values"
 
 # === Database params ===
 db:
@@ -53,10 +54,12 @@ log:
     '':
       handlers: [console, file]
       level: ERROR
+      propagate: False
 
     __main__:
       handlers: [console, file, telegram]
-      level: DEBUG
+      level: WARNING
+      propagate: False
 
     basic_application:
       handlers: [console, file, telegram]
