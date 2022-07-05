@@ -53,7 +53,7 @@ class PdcLiteApp(BasicApplication):
                         exec_time = time.time() - cycle_start_time
                         wait_time = max(0, runtime_config.get("updateTimeout") - exec_time)
 
-                        # 2. Check stop signal
+                        # 2. Check stop signal 
                         if self.halt.is_set():
                             break
 
