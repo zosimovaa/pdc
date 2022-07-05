@@ -38,7 +38,7 @@ keras==2.9.0
 Keras-Preprocessing==1.1.2
 kiwisolver==1.4.2
 libclang==14.0.1
-logging-telegram-handler @ git+https://bitbucket.org/zosimovaa/logging_telegram_handler.git@fc089ff724511a48924078342645434d473c2971
+logging-telegram-handler @ git+https://bitbucket.org/zosimovaa/logging_telegram_handler.gits
 Markdown==3.3.7
 matplotlib==3.5.2
 matplotlib-inline==0.1.3
@@ -53,7 +53,7 @@ patsy==0.5.2
 pexpect==4.8.0
 pickleshare==0.7.5
 Pillow==9.1.1
-poloniex @ git+https://bitbucket.org/zosimovaa/poloniex_api.git@fb240499e0f002f1d739c3730f7a991d41a33358
+poloniex @ git+https://bitbucket.org/zosimovaa/poloniex_api.git
 prompt-toolkit==3.0.29
 protobuf==3.19.4
 psutil==5.9.1
@@ -78,7 +78,7 @@ six==1.16.0
 sklearn==0.0
 stack-data==0.2.0
 statsmodels==0.13.2
-telegram-send @ git+https://bitbucket.org/zosimovaa/telegram_send.git@49f76e8ec65c89257b11081ea0ca7c723888a03f
+telegram-send @ git+https://bitbucket.org/zosimovaa/telegram_send.git
 tensorboard==2.9.0
 tensorboard-data-server==0.6.1
 tensorboard-plugin-wit==1.8.1
