@@ -4,15 +4,18 @@ asttokens==2.0.5
 astunparse==1.6.3
 backcall==0.2.0
 backports.zoneinfo==0.2.1
+build==0.8.0
 cachetools==5.1.0
 certifi==2022.5.18.1
 charset-normalizer==2.0.12
 checksumdir==1.2.0
+click==8.1.3
 clickhouse-driver==0.2.3
 cloudpickle==2.1.0
 cycler==0.11.0
 debugpy==1.6.0
 decorator==5.1.1
+docopt==0.6.2
 entrypoints==0.4
 executing==0.8.3
 flatbuffers==1.12
@@ -38,7 +41,7 @@ keras==2.9.0
 Keras-Preprocessing==1.1.2
 kiwisolver==1.4.2
 libclang==14.0.1
-logging-telegram-handler @ git+https://bitbucket.org/zosimovaa/logging_telegram_handler.gits
+logging-telegram-handler @ git+https://bitbucket.org/zosimovaa/logging_telegram_handler.git@fc089ff724511a48924078342645434d473c2971
 Markdown==3.3.7
 matplotlib==3.5.2
 matplotlib-inline==0.1.3
@@ -50,10 +53,13 @@ packaging==21.3
 pandas==1.4.2
 parso==0.8.3
 patsy==0.5.2
+pep517==0.12.0
 pexpect==4.8.0
 pickleshare==0.7.5
 Pillow==9.1.1
-poloniex @ git+https://bitbucket.org/zosimovaa/poloniex_api.git
+pip-tools==6.8.0
+pipreqs==0.4.11
+poloniex @ git+https://bitbucket.org/zosimovaa/poloniex_api.git@fb240499e0f002f1d739c3730f7a991d41a33358
 prompt-toolkit==3.0.29
 protobuf==3.19.4
 psutil==5.9.1
@@ -78,7 +84,7 @@ six==1.16.0
 sklearn==0.0
 stack-data==0.2.0
 statsmodels==0.13.2
-telegram-send @ git+https://bitbucket.org/zosimovaa/telegram_send.git
+telegram-send @ git+https://bitbucket.org/zosimovaa/telegram_send.git@49f76e8ec65c89257b11081ea0ca7c723888a03f
 tensorboard==2.9.0
 tensorboard-data-server==0.6.1
 tensorboard-plugin-wit==1.8.1
@@ -87,6 +93,7 @@ tensorflow-estimator==2.9.0
 tensorflow-io-gcs-filesystem==0.26.0
 termcolor==1.1.0
 threadpoolctl==3.1.0
+tomli==2.0.1
 tornado==6.1
 traitlets==5.2.1.post0
 typing_extensions==4.2.0
@@ -96,4 +103,5 @@ urllib3==1.26.9
 wcwidth==0.2.5
 Werkzeug==2.1.2
 wrapt==1.14.1
+yarg==0.1.9
 zipp==3.8.0
