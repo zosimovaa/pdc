@@ -4,7 +4,8 @@ import logging
 import traceback
 
 from db_connector import DBConnector
-from poloniex import HttpDataCollector
+from data_collector import HttpDataCollector
+from data_collector import PoloniexDataCollectorFullOb
 
 from basic_application import BasicApplication
 
@@ -18,14 +19,14 @@ class PdcLiteApp(BasicApplication):
     VERSION = 1.1
     MAX_TIMEOUT = 180
 
-    def __init__(self, config, secrets_list):
-        BasicApplication.__init__(self, config, secrets_list)
-        time.sleep(2)
+    def __init__(self, config):
+        BasicApplication.__init__(self, config_path=config)
 
     def run(self):
         while True:
             try:
                 pdc = HttpDataCollector()
+                pdc_ob = PoloniexDataCollectorFullOb()
                 logger.critical("{0} v.{1} started".format(self.NAME, self.VERSION))
 
                 db_config = self.config_manager.get_config().get("db")
@@ -39,8 +40,15 @@ class PdcLiteApp(BasicApplication):
 
                         runtime_config = self.config_manager.get_config().get("runtime")
 
-                        data = pdc.get_data()
-                        db.write_data(runtime_config.get("query"), data)
+                        query = runtime_config.get("query", None)
+                        if query is not None:
+                            data = pdc.get_data()
+                            db.write_data(query, data)
+
+                        query = runtime_config.get("query_ob", None)
+                        if query is not None:
+                            data = pdc_ob.get_data()
+                            db.write_data(query, data)
 
                         exec_time = time.time() - cycle_start_time
                         wait_time = max(0, runtime_config.get("updateTimeout") - exec_time)
@@ -65,7 +73,7 @@ if __name__ == "__main__":
     else:
         config = "test.yaml"
 
-    app = PdcLiteApp(config, [])
+    app = PdcLiteApp(config)
     app.start()
     app.join()
     time.sleep(10)

@@ -1,5 +1,6 @@
 .idea
 db_connector/__pycache__
 logs
-poloniex/__pycache__
+poloniex1/__pycache__
 bitbucket-pipelines_.yml
+data_collector/__pycache__

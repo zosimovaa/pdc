@@ -1,8 +1,8 @@
-from poloniex import PublicAPI, PublicAPIError
-from poloniex import Ticker
 import time
 import logging
 
+from poloniex import PublicAPI, PublicAPIError
+from .ticker import Ticker
 
 logger = logging.getLogger(__name__)
 
