@@ -1,11 +1,6 @@
 log.log
 db_connector/__pycache__
-<<<<<<< HEAD
 data_collector/__pycache__
 .idea
-=======
 logs
-poloniex1/__pycache__
->>>>>>> FEAT-01-RawOrderbook
 bitbucket-pipelines_.yml
-data_collector/__pycache__
