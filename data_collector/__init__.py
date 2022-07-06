@@ -1,2 +1,3 @@
-from .poloniex_full_ob import PoloniexDataCollectorFullOb
 from .poloniex_ob_volumes import HttpDataCollector
+from .poloniex_full_ob import PoloniexDataCollectorFullOb
+from .poloniex_resampled_ob import PoloniexDataCollectorResampledOb

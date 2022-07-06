@@ -6,6 +6,7 @@ import traceback
 from db_connector import DBConnector
 from data_collector import HttpDataCollector
 from data_collector import PoloniexDataCollectorFullOb
+from data_collector import PoloniexDataCollectorResampledOb
 
 from basic_application import BasicApplication
 
@@ -26,7 +27,7 @@ class PdcLiteApp(BasicApplication):
         while True:
             try:
                 pdc = HttpDataCollector()
-                pdc_ob = PoloniexDataCollectorFullOb()
+                pdc_ob = PoloniexDataCollectorResampledOb(self.config_manager)
                 logger.critical("{0} v.{1} started".format(self.NAME, self.VERSION))
 
                 db_config = self.config_manager.get_config().get("db")
@@ -53,7 +54,7 @@ class PdcLiteApp(BasicApplication):
                         exec_time = time.time() - cycle_start_time
                         wait_time = max(0, runtime_config.get("updateTimeout") - exec_time)
 
-                        # 2. Check stop signal 
+                        # 2. Check stop signal
                         if self.halt.is_set():
                             break
 
