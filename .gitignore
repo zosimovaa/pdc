@@ -4,3 +4,4 @@ data_collector/__pycache__
 .idea
 logs
 bitbucket-pipelines_.yml
+notebooks/.ipynb_checkpoints
