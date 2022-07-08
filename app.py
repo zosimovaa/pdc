@@ -26,8 +26,10 @@ class PdcLiteApp(BasicApplication):
     def run(self):
         while True:
             try:
-                pdc = HttpDataCollector()
-                pdc_ob = PoloniexDataCollectorResampledOb(self.config_manager)
+                #pdc = HttpDataCollector()
+                #pdc_ob = PoloniexDataCollectorResampledOb(self.config_manager)
+                pdc = PoloniexDataCollectorFullOb()
+
                 logger.critical("{0} v.{1} started".format(self.NAME, self.VERSION))
 
                 db_config = self.config_manager.get_config().get("db")
@@ -44,11 +46,6 @@ class PdcLiteApp(BasicApplication):
                         query = runtime_config.get("query", None)
                         if query is not None:
                             data = pdc.get_data()
-                            db.write_data(query, data)
-
-                        query = runtime_config.get("query_ob", None)
-                        if query is not None:
-                            data = pdc_ob.get_data()
                             db.write_data(query, data)
 
                         exec_time = time.time() - cycle_start_time
