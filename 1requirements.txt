@@ -1,0 +1,7 @@
+clickhouse_driver==0.2.4
+numpy==1.21.4
+poloniex==0.0.17
+basic-application @ git+https://bitbucket.org/zosimovaa/basic_application.git
+telegram-send @ git+https://bitbucket.org/zosimovaa/telegram_send.git@49f76e8ec65c89257b11081ea0ca7c723888a03f
+logging-telegram-handler @ git+https://bitbucket.org/zosimovaa/logging_telegram_handler.git@fc089ff724511a48924078342645434d473c2971
+PyYAML==6.0

@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 class PdcLiteApp(BasicApplication):
     NAME = "Poloniex Data Collector"
-    VERSION = 1.3
+    VERSION = "1.3.1"
     MAX_TIMEOUT = 180
 
     def __init__(self, config):
@@ -29,6 +29,7 @@ class PdcLiteApp(BasicApplication):
                 #pdc = HttpDataCollector()
                 #pdc_ob = PoloniexDataCollectorResampledOb(self.config_manager)
                 pdc = PoloniexDataCollectorFullOb()
+                pdc_resampled = PoloniexDataCollectorResampledOb(self.config_manager)
 
                 logger.critical("{0} v.{1} started".format(self.NAME, self.VERSION))
 
@@ -47,6 +48,11 @@ class PdcLiteApp(BasicApplication):
                         if query is not None:
                             data = pdc.get_data()
                             db.write_data(query, data)
+
+                        query_resampled = runtime_config.get("query_resampled", None)
+                        if query_resampled is not None:
+                            data_resampled = pdc_resampled.get_data()
+                            db.write_data(query_resampled, data_resampled)
 
                         exec_time = time.time() - cycle_start_time
                         wait_time = max(0, runtime_config.get("updateTimeout") - exec_time)
