@@ -4,7 +4,7 @@ charset-normalizer==2.1.0
 clickhouse-driver==0.2.4
 idna==3.3
 logging-telegram-handler @ git+https://bitbucket.org/zosimovaa/logging_telegram_handler.git@fc089ff724511a48924078342645434d473c2971
-numpy==1.23.0
+numpy~=1.21.6
 pandas==1.4.3
 poloniex @ git+https://bitbucket.org/zosimovaa/poloniex_api.git@fb240499e0f002f1d739c3730f7a991d41a33358
 python-dateutil==2.8.2
@@ -17,3 +17,5 @@ telegram-send @ git+https://bitbucket.org/zosimovaa/telegram_send.git@49f76e8ec6
 tzdata==2022.1
 tzlocal==4.2
 urllib3==1.26.10
+
+poloniex~=0.0.2

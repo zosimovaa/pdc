@@ -3,12 +3,12 @@ import time
 import logging
 import traceback
 
-from db_connector import DBConnector
-from data_collector import HttpDataCollector
-from data_collector import PoloniexDataCollectorFullOb
-from data_collector import PoloniexDataCollectorResampledOb
-
 from basic_application import BasicApplication
+from db_connector import DBConnector
+from controllers import TradeHistoryController
+from controllers import OrderbookController
+from poloniex import PublicAPI, PublicAPIError
+
 
 logging.raiseExceptions = True
 logging.basicConfig(level=logging.WARNING)
@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 class PdcLiteApp(BasicApplication):
     NAME = "Poloniex Data Collector"
-    VERSION = "1.3.1"
+    VERSION = "3.0.0"
     MAX_TIMEOUT = 180
 
     def __init__(self, config):
@@ -26,43 +26,31 @@ class PdcLiteApp(BasicApplication):
     def run(self):
         while True:
             try:
-                #pdc = HttpDataCollector()
-                #pdc_ob = PoloniexDataCollectorResampledOb(self.config_manager)
-                pdc = PoloniexDataCollectorFullOb()
-                pdc_resampled = PoloniexDataCollectorResampledOb(self.config_manager)
-
                 logger.critical("{0} v.{1} started".format(self.NAME, self.VERSION))
 
                 db_config = self.config_manager.get_config().get("db")
-                db_config["user"] = os.getenv("DB_USER")
-                db_config["password"] = os.getenv("DB_PASS")
 
                 with DBConnector(db_config) as db:
+                    trade_controller = TradeHistoryController(db, self.config_manager)
+                    orderbook_controller = OrderbookController(db, self.config_manager)
+
+                    start_time = time.time()
                     while True:
-                        # 1. Business logic
-                        cycle_start_time = time.time()
-
-                        runtime_config = self.config_manager.get_config().get("runtime")
-
-                        query = runtime_config.get("query", None)
-                        if query is not None:
-                            data = pdc.get_data()
-                            db.write_data(query, data)
-
-                        query_resampled = runtime_config.get("query_resampled", None)
-                        if query_resampled is not None:
-                            data_resampled = pdc_resampled.get_data()
-                            db.write_data(query_resampled, data_resampled)
-
-                        exec_time = time.time() - cycle_start_time
-                        wait_time = max(0, runtime_config.get("updateTimeout") - exec_time)
-
-                        # 2. Check stop signal
+                        # 1. Check stop signal
                         if self.halt.is_set():
                             break
 
+                        # 2. Business logic
+                        runtime_config = self.config_manager.get_config().get("runtime")
+                        for ticker in runtime_config["tickers"]:
+                            trade_controller.update(ticker)
+                            orderbook_controller.update(ticker)
+
                         # 3. Sleep
+                        exec_time = time.time() - start_time
+                        wait_time = max(0, runtime_config.get("updateTimeout") - exec_time)
                         time.sleep(wait_time)
+                        start_time = time.time()
 
             except Exception as e:
                 logger.error(e)

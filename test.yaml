@@ -1,15 +1,27 @@
 # === Раздел с общими конфигурационными параметрами ===
 runtime:
+  tickers: ["USDT_BTC", "BTC_ETH"]
   updateTimeout: 45
   errorTimeout: 10
-  query: "insert into rt_dev.orderbook values"
-  query_resampled: "insert into rt_dev.orderbook2 values"
-  levels: [0.0, 0.2, 0.4, 0.6, 0.8,
-           1.0, 1.2, 1.4, 1.6, 1.8,
-           2.0, 2.2, 2.4, 2.6, 2.8,
-           3.0, 3.3, 3.6, 3.9,
-           4.2, 4.5, 4.8,
-           5.1, 5.4, 5.7, 100]
+
+
+orderbook:
+  levels: [ 0.0, 0.2, 0.4, 0.6, 0.8,
+            1.0, 1.2, 1.4, 1.6, 1.8,
+            2.0, 2.2, 2.4, 2.6, 2.8,
+            3.0, 3.3, 3.6, 3.9,
+            4.2, 4.5, 4.8,
+            5.1, 5.4, 5.7, 100 ]
+
+trades:
+  depth: 86400
+
+
+
+  query_history_data: "insert into rt_dev.trades values"
+  query_history_data_max_ts: "select max(ts) rt_dev.trades where pair=%(pair)s"
+  query_orderbook_data: "insert into rt_dev.orderbook values"
+
 
 # === Database params ===
 db:
@@ -18,8 +30,6 @@ db:
   port: 59000
   database: rt_dev
 
-queries:
-  orderbook: insert into rt_dev.orderbook values
 
 # === Логирование ===
 log:
