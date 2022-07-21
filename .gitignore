@@ -1,6 +1,6 @@
 log.log
 db_connector/__pycache__
-data_collector/__pycache__
+_depr/data_collector/__pycache__
 .idea
 logs
 bitbucket-pipelines_.yml

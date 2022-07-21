@@ -4,10 +4,9 @@ import logging
 import traceback
 
 from basic_application import BasicApplication
-from db_connector import DBConnector
+from clickhouse_connector import ClickHouseConnector
 from controllers import TradeHistoryController
 from controllers import OrderbookController
-from poloniex import PublicAPI, PublicAPIError
 
 
 logging.raiseExceptions = True
@@ -17,11 +16,12 @@ logger = logging.getLogger(__name__)
 
 class PdcLiteApp(BasicApplication):
     NAME = "Poloniex Data Collector"
-    VERSION = "3.0.0"
+    VERSION = "3.1.0"
     MAX_TIMEOUT = 180
 
     def __init__(self, config):
         BasicApplication.__init__(self, config_path=config)
+        self.tickers = dict()
 
     def run(self):
         while True:
@@ -30,11 +30,11 @@ class PdcLiteApp(BasicApplication):
 
                 db_config = self.config_manager.get_config().get("db")
 
-                with DBConnector(db_config) as db:
-                    trade_controller = TradeHistoryController(db, self.config_manager)
-                    orderbook_controller = OrderbookController(db, self.config_manager)
+                with ClickHouseConnector(db_config) as conn:
+                    trade_controller = TradeHistoryController(conn, self.config_manager)
+                    orderbook_controller = OrderbookController(conn, self.config_manager)
 
-                    start_time = time.time()
+                    start_time = int(time.time())
                     while True:
                         # 1. Check stop signal
                         if self.halt.is_set():
@@ -43,14 +43,14 @@ class PdcLiteApp(BasicApplication):
                         # 2. Business logic
                         runtime_config = self.config_manager.get_config().get("runtime")
                         for ticker in runtime_config["tickers"]:
-                            trade_controller.update(ticker)
-                            orderbook_controller.update(ticker)
+                            trade_controller.update(ticker, ts=start_time)
+                            orderbook_controller.update(ticker, ts=start_time)
 
                         # 3. Sleep
                         exec_time = time.time() - start_time
                         wait_time = max(0, runtime_config.get("updateTimeout") - exec_time)
                         time.sleep(wait_time)
-                        start_time = time.time()
+                        start_time = int(time.time())
 
             except Exception as e:
                 logger.error(e)

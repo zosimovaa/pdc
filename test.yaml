@@ -1,9 +1,8 @@
 # === Раздел с общими конфигурационными параметрами ===
 runtime:
-  tickers: ["USDT_BTC", "BTC_ETH"]
+  tickers: ["USDT_BTC", "BTC_ETH", "BTC_XMR" ]
   updateTimeout: 45
   errorTimeout: 10
-
 
 orderbook:
   levels: [ 0.0, 0.2, 0.4, 0.6, 0.8,
@@ -15,13 +14,6 @@ orderbook:
 
 trades:
   depth: 86400
-
-
-
-  query_history_data: "insert into rt_dev.trades values"
-  query_history_data_max_ts: "select max(ts) rt_dev.trades where pair=%(pair)s"
-  query_orderbook_data: "insert into rt_dev.orderbook values"
-
 
 # === Database params ===
 db:
@@ -88,19 +80,11 @@ log:
     log_manager:
       level: WARNING
 
-    db_connector:
+    controllers.trades:
       level: INFO
 
-    data_providers:
-      level: WARNING
+    controllers.orderbook:
+      level: INFO
 
-    core:
-      level: WARNING
-
-    dataset_tools:
-      level: WARNING
-
-
-# === Бизнес-функцинальность ===
-models_path: /Users/alex/Dev/_Reinforcement Trading/rt_models
-models_update_period: 5
+    clickhouse_connector.clickhouse_connector:
+      level: ERROR

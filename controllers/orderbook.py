@@ -1,8 +1,10 @@
 import time
+import logging
 import numpy as np
 
 from poloniex import PublicAPI, PublicAPIError
-from .orderbook_resampled import OrderbookResampled
+
+logger = logging.getLogger(__name__)
 
 
 class OrderbookController:
@@ -10,8 +12,8 @@ class OrderbookController:
     LEVELS_DEFAULT = [0, 1, 2, 3, 5, 8, 13]
     QUERY = "insert into orderbook values"
 
-    def __init__(self, db, config_manager):
-        self.db = db
+    def __init__(self, conn, config_manager):
+        self.conn = conn
         self.config_manager = config_manager
         self.api = PublicAPI()
 
@@ -19,11 +21,19 @@ class OrderbookController:
         if ts is None:
             ts = int(time.time())
 
-        orderbook = self.api.get_orderbook(ticker, 99)
-        db_data = self._make_db_data(ts, ticker, orderbook)
+        try:
+            orderbook = self.api.get_orderbook(ticker, 99)
+        except PublicAPIError as e:
+            logger.info("{0}: Data request error: {1}".format(ticker, e))
 
-
-
+        else:
+            data = self._make_db_data(ts, ticker, orderbook)
+            if len(data):
+                self.conn.cursor.executemany(self.QUERY, data)
+                data_length = self.conn.cursor.rowcount
+                logger.info("{0}: {1} orderbook records was written into db".format(ticker, data_length))
+            else:
+                logger.info("{0}: No data to write".format(ticker))
 
     def _make_db_data(self, ts, ticker, orderbook):
         data = []
@@ -51,6 +61,7 @@ class OrderbookController:
                 post_only
             ]
             data.append(record)
+        return data
 
     def _resample_ob(self, asks, bids):
         keys_asks = np.array(list(map(float, asks.keys())))
