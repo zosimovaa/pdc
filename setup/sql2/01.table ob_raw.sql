@@ -1,4 +1,4 @@
-CREATE TABLE rt_dev.ob_raw (
+CREATE TABLE orderbook (
     ts UInt32 NOT NULL,
 	pair String NOT NULL,
 	lowest_ask Decimal64(8) NOT NULL,
@@ -11,4 +11,4 @@ CREATE TABLE rt_dev.ob_raw (
 ) ENGINE = MergeTree()
 PARTITION BY toYYYYMMDD(FROM_UNIXTIME(ts))
 ORDER BY (ts, pair)
-TTL FROM_UNIXTIME(ts) + INTERVAL 900 DAY
+TTL FROM_UNIXTIME(ts) + INTERVAL 90 DAY

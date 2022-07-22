@@ -18,6 +18,8 @@ class TradeHistoryController:
         self.last_updates = dict()
 
     def update(self, ticker, ts=None):
+        data_length_total = 0
+
         config = self.config_manager.get_config().get("trades", dict())
 
         if ts is None:
@@ -31,11 +33,13 @@ class TradeHistoryController:
         ts_start = max(last_update, ts_end - config.get("depth", self.DEPTH_DEFAULT))
 
         try:
+
             for batch in self.api.get_trade_history_batch(ticker, ts_start, ts_end):
                 data = self._make_db_data(ticker, batch)
                 if len(data):
                     self.conn.cursor.executemany(self.PUT_DATA_QUERY, data)
                     data_length = self.conn.cursor.rowcount
+                    data_length_total += data_length
                     logger.info("{0}: {1} records was written into db".format(ticker, data_length))
                 else:
                     logger.info("{0}: No data to write".format(ticker))
@@ -43,7 +47,9 @@ class TradeHistoryController:
             self.last_updates[ticker] = ts_end
 
         except PublicAPIError as e:
-            logger.info("{0}: Data request error: {1}".format(ticker, e))
+            logger.error("{0}: Data request error: {1}".format(ticker, e))
+        return data_length_total
+
 
     def _get_max_ts(self, ticker):
         params = {"pair": ticker}

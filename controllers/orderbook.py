@@ -18,13 +18,14 @@ class OrderbookController:
         self.api = PublicAPI()
 
     def update(self, ticker, ts=None):
+        data_length = 0
         if ts is None:
             ts = int(time.time())
 
         try:
             orderbook = self.api.get_orderbook(ticker, 99)
         except PublicAPIError as e:
-            logger.info("{0}: Data request error: {1}".format(ticker, e))
+            logger.error("{0}: Data request error: {1}".format(ticker, e))
 
         else:
             data = self._make_db_data(ts, ticker, orderbook)
@@ -34,6 +35,8 @@ class OrderbookController:
                 logger.info("{0}: {1} orderbook records was written into db".format(ticker, data_length))
             else:
                 logger.info("{0}: No data to write".format(ticker))
+
+        return data_length
 
     def _make_db_data(self, ts, ticker, orderbook):
         data = []

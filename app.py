@@ -36,6 +36,7 @@ class PdcLiteApp(BasicApplication):
 
                     start_time = int(time.time())
                     while True:
+
                         # 1. Check stop signal
                         if self.halt.is_set():
                             break

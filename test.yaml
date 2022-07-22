@@ -1,6 +1,10 @@
 # === Раздел с общими конфигурационными параметрами ===
 runtime:
-  tickers: ["USDT_BTC", "BTC_ETH", "BTC_XMR" ]
+  tickers: ["USDT_BTC", "USDT_ETH", "USDT_USDD", "USDT_TRX", "USDT_BTT", "USDT_NFT", "USDT_XRP",
+            "BTC_ETH", "BTC_XRP", "BTC_TRX", "BTC_LTC", "BTC_EOS", "BTC_XMR", "BTC_DOGE",
+            "TRX_NFT", "TRX_ETH", "TRX_JST", "TRX_XRP",
+            "USDT_ETHBULL", "USDT_BULL", "USDT_BEAR", "USDT_ADABULL"]
+
   updateTimeout: 45
   errorTimeout: 10
 
@@ -20,7 +24,7 @@ db:
   #host: 185.117.118.107
   host: 217.197.116.177
   port: 59000
-  database: rt_dev
+  database: rt
 
 
 # === Логирование ===
@@ -30,7 +34,7 @@ log:
 
   formatters:
     standard:
-      format: '%(asctime)s %(name)52s [%(levelname)8s]: %(message)s'
+      format: '%(asctime)s %(name)30s [%(levelname)8s]: %(message)s'
     telegram:
       format: '%(message)s'
 
@@ -75,10 +79,10 @@ log:
       level: DEBUG
 
     config_manager:
-      level: WARNING
+      level: INFO
 
     log_manager:
-      level: WARNING
+      level: INFO
 
     controllers.trades:
       level: INFO
