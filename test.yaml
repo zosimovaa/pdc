@@ -24,7 +24,7 @@ db:
   #host: 185.117.118.107
   host: 217.197.116.177
   port: 59000
-  database: rt
+  database: rt_dev
 
 
 # === Логирование ===
