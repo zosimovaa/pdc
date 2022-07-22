@@ -1,3 +1,8 @@
+poloniex @ git+https://bitbucket.org/zosimovaa/poloniex_api.git
+telegram-send @ git+https://bitbucket.org/zosimovaa/telegram_send.git
+logging-telegram-handler @ git+https://bitbucket.org/zosimovaa/logging_telegram_handler.git
+basic-application @ git+https://bitbucket.org/zosimovaa/basic_application.git
+
 certifi==2022.6.15
 charset-normalizer==2.1.0
 clickhouse-driver==0.2.4
@@ -13,8 +18,3 @@ six==1.16.0
 tzdata==2022.1
 tzlocal==4.2
 urllib3==1.26.10
-
-poloniex @ git+https://bitbucket.org/zosimovaa/poloniex_api.git
-telegram-send @ git+https://bitbucket.org/zosimovaa/telegram_send.git
-logging-telegram-handler @ git+https://bitbucket.org/zosimovaa/logging_telegram_handler.git
-basic-application @ git+https://bitbucket.org/zosimovaa/basic_application.git
