@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 class PdcLiteApp(BasicApplication):
     NAME = "Poloniex Data Collector"
-    VERSION = "4.0.1"
+    VERSION = "4.0.2"
     MAX_TIMEOUT = 180
 
     def __init__(self, config):
