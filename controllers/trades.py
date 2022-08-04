@@ -62,6 +62,13 @@ class TradeHistoryController:
         data = []
 
         for trade in trades:
+            order_number = self._convert(trade.get("orderNumber", 0))
+            g_trade_id = self._convert(trade.get("globalTradeID", 0))
+            trade_id = self._convert(trade.get("tradeID", 0))
+
+            if order_number is not None:
+                order_number
+
             record = [
                 self.api.date_to_unix_ts_in_utc(trade.get("date")),
                 ticker,
@@ -69,11 +76,20 @@ class TradeHistoryController:
                 float(trade.get("rate", 0.)),
                 float(trade.get("amount", 0.)),
                 float(trade.get("total", 0.)),
-                int(trade.get("orderNumber", 0)),
-                int(trade.get("globalTradeID", 0)),
-                int(trade.get("tradeID", 0))
+                order_number,
+                g_trade_id,
+                trade_id
             ]
             data.append(record)
         return data
+
+    @staticmethod
+    def _convert(value):
+        try:
+            converted = int(value)
+        except Exception:
+            converted = 0
+        return converted
+
 
 
