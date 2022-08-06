@@ -77,11 +77,12 @@ class OrderbookController:
 
         asks_resampled = dict()
         key = self.TEMPL.format(lowest_ask)
-        asks_resampled[key] = asks[key]
+        asks_resampled[key] = vols_asks[np.argmin(keys_asks)]
 
         bids_resampled = dict()
         key = self.TEMPL.format(highest_bid)
-        bids_resampled[key] = bids[key]
+        key = self.TEMPL.format(highest_bid)
+        bids_resampled[key] = vols_bids[np.argmax(keys_bids)]
 
         config = self.config_manager.get_config().get("orderbook", dict())
         levels = config.get("levels", self.LEVELS_DEFAULT)

@@ -17,7 +17,7 @@ orderbook:
             5.1, 5.4, 5.7, 100 ]
 
 trades:
-  depth: 86400
+  depth: 300
 
 # === Database params ===
 db:
