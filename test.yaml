@@ -85,7 +85,7 @@ log:
       level: INFO
 
     controllers.trades:
-      level: INFO
+      level: DEBUG
 
     controllers.orderbook:
       level: INFO
