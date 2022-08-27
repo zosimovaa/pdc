@@ -76,13 +76,16 @@ log:
 
     basic_application:
       handlers: [console, file, telegram]
-      level: DEBUG
+      level: INFO
 
     config_manager:
       level: INFO
 
     log_manager:
       level: INFO
+
+    poloniex.public:
+      level: DEBUG
 
     controllers.trades:
       level: DEBUG

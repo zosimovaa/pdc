@@ -1,7 +1,7 @@
 import time
 import logging
 from poloniex import PublicAPI, PublicAPIError
-
+from basic_application import BasicApplication
 
 logger = logging.getLogger(__name__)
 
