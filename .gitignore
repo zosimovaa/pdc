@@ -7,3 +7,4 @@ bitbucket-pipelines_.yml
 notebooks/.ipynb_checkpoints
 controllers/__pycache__
 clickhouse_connector/__pycache__
+poloniex_api/__pycache__
