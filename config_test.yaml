@@ -1,6 +1,9 @@
 # === Раздел с общими конфигурационными параметрами ===
 runtime:
-  symbols: ["BTC_USDT", "ETH_USDT"]
+  symbols: ["BTC_USDT", "ETH_USDT", "USDD_USDT", "TRX_USDT", "BTT_USDT", "NFT_USDT", "XRP_USDT",
+  "ETH_BTC", "XRP_BTC", "TRX_BTC", "LTC_BTC", "EOS_BTC", "XMR_BTC", "DOGE_BTC",
+  "NFT_TRX", "ETH_TRX", "JST_TRX", "XRP_TRX",
+  "ETHBULL_USDT", "BULL_USDT", "BEAR_USDT", "ADABULL_USDT"]
 
   updateTimeout: 45
   errorTimeout: 10
@@ -68,7 +71,7 @@ log:
 
     __main__:
       handlers: [console, file, telegram]
-      level: DEBUG
+      level: WARNING
       propagate: False
 
     basic_application:
@@ -82,16 +85,16 @@ log:
       level: INFO
 
     poloniex.public:
-      level: DEBUG
+      level: ERROR
 
     controllers.abstract:
-      level: DEBUG
+      level: ERROR
 
     controllers.trades:
-      level: DEBUG
+      level: ERROR
 
     controllers.orderbook:
-      level: DEBUG
+      level: ERROR
 
     clickhouse_connector.clickhouse_connector:
       level: ERROR

@@ -48,13 +48,23 @@ class PdcLiteApp(BasicApplication):
                         self.add_handler(conn)
                         self.cleanup_handlers()
 
+                        cycle_stat_ob = 0
+                        cycle_stat_trades = 0
                         for symbol in self.symbols:
-                            self.orderbook_handlers[symbol].update()
-                            self.trades_handlers[symbol].update()
+                            records = self.orderbook_handlers[symbol].update()
+                            cycle_stat_ob += records
+                            records = self.trades_handlers[symbol].update()
+                            cycle_stat_trades += records
+
+                        exec_time = time.time() - start_time
+                        logger.warning("Cycle {0:.2f} | Symbols: {1}, Orderbook: {2} | Trades {3}".format(
+                            exec_time, len(self.symbols), cycle_stat_ob, cycle_stat_trades))
 
                         # 3. Sleep
                         # todo Вынести в отдельный метод в BasicApplication
-                        exec_time = time.time() - start_time
+
+
+
                         wait_time = max(0, runtime_config.get("updateTimeout") - exec_time)
                         time.sleep(wait_time)
                         start_time = int(time.time())
@@ -76,9 +86,7 @@ class PdcLiteApp(BasicApplication):
 
     def cleanup_handlers(self):
         actual_symbol_list = self.orderbook_handlers.keys()
-        logger.debug(actual_symbol_list)
         for symbol in actual_symbol_list:
-            logger.debug(actual_symbol_list)
             if symbol not in self.symbols:
                 del self.orderbook_handlers[symbol]
                 logger.info("Orderbook handler was deleted for {0} symbol".format(symbol))

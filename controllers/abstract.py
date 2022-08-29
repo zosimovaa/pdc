@@ -25,7 +25,8 @@ class AbstractSymbolHandler:
         # step 2 - format data
         data = self._transform_data(df)
         # step 3 - sava data
-        self._store_data(data)
+        records = self._store_data(data)
+        return records
 
     def _get_data(self):
         return pd.DataFrame()
@@ -34,13 +35,22 @@ class AbstractSymbolHandler:
         return list()
 
     def _store_data(self, data):
+        row_count = 0
         if len(data):
-            self.conn.cursor.executemany(self.DATA_INSERT_QUERY, data)
-            row_count = self.conn.cursor.rowcount
-            logger.info("{0}: {1} records was written into db".format(self.symbol, row_count))
-            self.last_update = self.ts
+            try:
+                self.conn.cursor.executemany(self.DATA_INSERT_QUERY, data)
+            except Exception as e:
+                logger.error(str(e))
+                logger.error(data[:5])
+            else:
+                self.last_update = self.ts
+                row_count = self.conn.cursor.rowcount
+                logger.info("{0}: {1} records was written into db".format(self.symbol, row_count))
+
         else:
             logger.info("{0}: No data to write".format(self.symbol))
+
+        return row_count
 
     def _get_last_update_from_db(self):
         params = {"symbol": self.symbol}

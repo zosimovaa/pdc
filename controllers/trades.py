@@ -2,7 +2,7 @@ import time
 import logging
 import pandas as pd
 from .abstract import AbstractSymbolHandler
-from poloniex_api import PublicApiV2, PublicApiError
+from poloniex import PublicApiV2, PublicApiError
 
 logger = logging.getLogger(__name__)
 
