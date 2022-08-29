@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 class PdcLiteApp(BasicApplication):
     NAME = "Poloniex Data Collector"
-    VERSION = "5.0.0"
+    VERSION = "5.0.1"
     MAX_TIMEOUT = 180
 
     def __init__(self, cfg, env):
@@ -62,8 +62,6 @@ class PdcLiteApp(BasicApplication):
 
                         # 3. Sleep
                         # todo Вынести в отдельный метод в BasicApplication
-
-
 
                         wait_time = max(0, runtime_config.get("updateTimeout") - exec_time)
                         time.sleep(wait_time)
