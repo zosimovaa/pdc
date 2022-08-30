@@ -30,9 +30,11 @@ class PdcLiteApp(BasicApplication):
         while True:
             try:
                 logger.critical("[{2}] {0} v.{1} started".format(self.NAME, self.VERSION, self.env))
-
                 db_config = self.config_manager.get_config().get("db")
                 with ClickHouseConnector(db_config) as conn:
+                    self.orderbook_handlers = dict()
+                    self.trades_handlers = dict()
+
                     start_time = int(time.time())
                     while True:
                         # 1. Check stop signal
