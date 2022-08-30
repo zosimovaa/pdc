@@ -42,6 +42,7 @@ class AbstractSymbolHandler:
             except Exception as e:
                 logger.error(str(e))
                 logger.error(data[:5])
+                raise Exception("DB connect error") from e
             else:
                 self.last_update = self.ts
                 row_count = self.conn.cursor.rowcount
